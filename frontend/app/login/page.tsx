@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Shield, User, ScanLine } from "lucide-react"
-import Image from "next/image"
 
 export default function Home() {
   const [role, setRole] = useState<string>("")
@@ -19,27 +18,10 @@ export default function Home() {
   }
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800"
-      style={{ 
-        backgroundImage: "url('/landscape.jpeg')", 
-        backgroundSize: "cover",
-        backgroundPositionY: "bottom"
-       }}
-    >
-      <Card 
-        className="w-full max-w-md"
-        style={{
-          background: "hsl(var(--card) / 0.5)",
-          border: "2px solid hsl(var(--card) / 0.1)",
-          backdropFilter: "blur(20px)",
-        }}
-      >
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold">
-            <Image src={"/aadhaar-logo.png"} alt="Logo" width={50} height={50} className="inline-block mr-4" />
-            AadharX
-          </CardTitle>
+          <CardTitle className="text-3xl font-bold">AadharX</CardTitle>
           <CardDescription>Decentralized Identity Verification System</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -54,10 +36,10 @@ export default function Home() {
               Select your role
             </label>
             <Select onValueChange={setRole} value={role}>
-              <SelectTrigger className="bg-gray-200 dark:bg-gray-800">
+              <SelectTrigger>
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
-              <SelectContent className="bg-gray-200 dark:bg-gray-900">
+              <SelectContent>
                 <SelectItem value="admin">
                   <div className="flex items-center gap-2">
                     <Shield className="h-4 w-4" />

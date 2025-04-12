@@ -41,7 +41,7 @@ export default function LandingPage() {
           </nav>
           <div className="flex items-center gap-4">
             <Link href="/login">
-              <Button variant="ghost" className="text-gray-300 hover:bg-gray-800 hover:text-gray-200">
+              <Button variant="ghost" className="text-gray-300 hover:bg-gray-800 hover:text-white">
                 Login
               </Button>
             </Link>
@@ -77,7 +77,7 @@ export default function LandingPage() {
                 </Button>
               </Link>
               <Link href="#how-it-works">
-                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800 hover:text-gray-200">
+                <Button size="lg" variant="outline" className="border-none text-gray-300 bg-transparent hover:bg-gray-800 hover:text-white">
                   Learn More
                 </Button>
               </Link>
@@ -339,7 +339,7 @@ export default function LandingPage() {
                 </Button>
               </Link>
               <Link href="/contact">
-                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800 hover:text-gray-200">
+                <Button size="lg" variant="outline" className="border-none text-gray-300 bg-transparent hover:bg-gray-800 hover:text-white">
                   Contact Us
                 </Button>
               </Link>
