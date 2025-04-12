@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Shield, User, ScanLine } from "lucide-react"
+import Image from "next/image"
 
 export default function Home() {
   const [role, setRole] = useState<string>("")
@@ -35,7 +36,10 @@ export default function Home() {
         }}
       >
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold">AadharX</CardTitle>
+          <CardTitle className="text-3xl font-bold">
+            <Image src={"/aadhaar-logo.png"} alt="Logo" width={50} height={50} className="inline-block mr-4" />
+            AadharX
+          </CardTitle>
           <CardDescription>Decentralized Identity Verification System</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -50,10 +54,10 @@ export default function Home() {
               Select your role
             </label>
             <Select onValueChange={setRole} value={role}>
-              <SelectTrigger>
+              <SelectTrigger className="bg-gray-200 dark:bg-gray-800">
                 <SelectValue placeholder="Select a role" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-gray-200 dark:bg-gray-900">
                 <SelectItem value="admin">
                   <div className="flex items-center gap-2">
                     <Shield className="h-4 w-4" />
