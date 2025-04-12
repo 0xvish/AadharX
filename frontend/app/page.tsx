@@ -29,8 +29,9 @@ export default function Home() {
       <Card 
         className="w-full max-w-md"
         style={{
+          background: "hsl(var(--card) / 0.5)",
+          border: "2px solid hsl(var(--card) / 0.1)",
           backdropFilter: "blur(20px)",
-          border: "2px solid hsl(var(--card))"
         }}
       >
         <CardHeader className="text-center">
