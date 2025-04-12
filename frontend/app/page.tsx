@@ -18,8 +18,21 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      <Card className="w-full max-w-md">
+    <div 
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800"
+      style={{ 
+        backgroundImage: "url('/landscape.jpeg')", 
+        backgroundSize: "cover",
+        backgroundPositionY: "bottom"
+       }}
+    >
+      <Card 
+        className="w-full max-w-md"
+        style={{
+          backdropFilter: "blur(20px)",
+          border: "2px solid hsl(var(--card))"
+        }}
+      >
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold">AadharX</CardTitle>
           <CardDescription>Decentralized Identity Verification System</CardDescription>
