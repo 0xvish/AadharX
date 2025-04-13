@@ -1,7 +1,9 @@
 "use client"
 
+import { useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
+import { useAccount } from "wagmi"
 import { Button } from "@/components/ui/button"
 import { Shield, User, ScanLine, LogOut } from "lucide-react"
 import {
@@ -14,10 +16,22 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ModeToggle } from "@/components/mode-toggle"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 export function Navbar() {
   const pathname = usePathname()
   const router = useRouter()
+  const { isConnected } = useAccount()
+
+  // Protect only admin and user dashboards
+  useEffect(() => {
+    const protectedRoutes = ["/admin", "/user"]
+    const isProtected = protectedRoutes.some((route) => pathname.startsWith(route))
+
+    if (isProtected && !isConnected) {
+      router.push("/")
+    }
+  }, [isConnected, pathname, router])
 
   const getRole = () => {
     if (pathname.includes("/admin")) return "Admin"
@@ -39,21 +53,27 @@ export function Navbar() {
 
   return (
     <header className="border-b">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-6">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+        {/* Left: Logo and Role Info */}
+        <div className="flex sm:flex-row sm:items-center gap-2 sm:gap-6">
           <Link href="/" className="flex items-center gap-2">
             <Shield className="h-6 w-6" />
             <span className="text-xl font-bold">AadharX</span>
           </Link>
+
+
           {getRole() && (
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
               {getIcon()}
               <span>{getRole()} Dashboard</span>
             </div>
           )}
+
         </div>
 
-        <div className="flex items-center gap-4">
+        {/* Right: Mode toggle and dropdown */}
+        <div className="flex items-center gap-2 sm:gap-4">
+          <ConnectButton />
           <ModeToggle />
 
           <DropdownMenu>
