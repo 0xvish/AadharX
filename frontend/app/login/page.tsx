@@ -1,21 +1,38 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useAccount } from "wagmi"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Shield, User, ScanLine } from "lucide-react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 
-export default function Home() {
-  const [role, setRole] = useState<string>("")
-  const router = useRouter()
+// Import the authority.json file directly (public folder)
+import authorityData from "../../lib/authority.json"
+import { Shield } from "lucide-react"
 
-  const handleLogin = () => {
-    if (role) {
-      router.push(`/${role.toLowerCase()}`)
+export default function Home() {
+  const router = useRouter()
+  const { address, isConnected } = useAccount()
+  const [redirecting, setRedirecting] = useState(false)
+
+  useEffect(() => {
+    const checkAuthority = async () => {
+      if (!isConnected || !address) return
+
+      setRedirecting(true)
+
+      try {
+        // Check if the address is in the authority list
+        const isAdmin = authorityData.authorities?.includes(address)
+        router.push(isAdmin ? "/admin" : "/user")
+      } catch (error) {
+        console.error("Failed to check authority.json:", error)
+        router.push("/user") // fallback
+      }
     }
-  }
+
+    checkAuthority()
+  }, [isConnected, address])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
@@ -31,49 +48,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Select your role</label>
-            <div className="flex gap-4 space-y-2">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="role"
-                  value="admin"
-                  checked={role === "admin"}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="accent-primary"
-                />
-                <Shield className="h-4 w-4" />
-                <span>Admin</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="role"
-                  value="user"
-                  checked={role === "user"}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="accent-primary"
-                />
-                <User className="h-4 w-4" />
-                <span>User</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="role"
-                  value="verifier"
-                  checked={role === "verifier"}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="accent-primary"
-                />
-                <ScanLine className="h-4 w-4" />
-                <span>Verifier</span>
-              </label>
-            </div>
-          </div>
+          <p className="text-center text-muted-foreground text-sm">
+            {redirecting ? "Verifying role..." : "Connect your wallet to continue"}
+          </p>
         </CardContent>
-        <CardFooter className="flex flex-col items-center space-y-4"> 
+        <CardFooter className="flex flex-col items-center space-y-4">
           <ConnectButton />
         </CardFooter>
       </Card>
