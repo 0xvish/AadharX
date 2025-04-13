@@ -1,21 +1,38 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useAccount } from "wagmi"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Shield, User, ScanLine } from "lucide-react"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+
+// Import the authority.json file directly (public folder)
+import authorityData from "../../lib/authority.json"
+import { Shield } from "lucide-react"
 
 export default function Home() {
-  const [role, setRole] = useState<string>("")
   const router = useRouter()
+  const { address, isConnected } = useAccount()
+  const [redirecting, setRedirecting] = useState(false)
 
-  const handleLogin = () => {
-    if (role) {
-      router.push(`/${role.toLowerCase()}`)
+  useEffect(() => {
+    const checkAuthority = async () => {
+      if (!isConnected || !address) return
+
+      setRedirecting(true)
+
+      try {
+        // Check if the address is in the authority list
+        const isAdmin = authorityData.authorities?.includes(address)
+        router.push(isAdmin ? "/admin" : "/user")
+      } catch (error) {
+        console.error("Failed to check authority.json:", error)
+        router.push("/user") // fallback
+      }
     }
-  }
+
+    checkAuthority()
+  }, [isConnected, address])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
@@ -31,41 +48,12 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="role" className="text-sm font-medium">
-              Select your role
-            </label>
-            <Select onValueChange={setRole} value={role}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select a role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="admin">
-                  <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4" />
-                    <span>Admin</span>
-                  </div>
-                </SelectItem>
-                <SelectItem value="user">
-                  <div className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    <span>User</span>
-                  </div>
-                </SelectItem>
-                <SelectItem value="verifier">
-                  <div className="flex items-center gap-2">
-                    <ScanLine className="h-4 w-4" />
-                    <span>Verifier</span>
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <p className="text-center text-muted-foreground text-sm">
+            {redirecting ? "Verifying role..." : "Connect your wallet to continue"}
+          </p>
         </CardContent>
-        <CardFooter>
-          <Button className="w-full" onClick={handleLogin} disabled={!role}>
-            Continue
-          </Button>
+        <CardFooter className="flex flex-col items-center space-y-4">
+          <ConnectButton />
         </CardFooter>
       </Card>
     </div>
