@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   title: "AadharX - Decentralized Identity Verification",
   description:
     "A decentralized identity verification system built with blockchain and zero-knowledge proofs",
-  generator: "v0.dev",
 };
 
 export default function RootLayout({
