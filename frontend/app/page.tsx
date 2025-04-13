@@ -1,28 +1,43 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Shield, User, ScanLine } from "lucide-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Shield, User, ScanLine } from "lucide-react";
 
 export default function Home() {
-  const [role, setRole] = useState<string>("")
-  const router = useRouter()
+  const [role, setRole] = useState<string>("");
+  const router = useRouter();
 
   const handleLogin = () => {
     if (role) {
-      router.push(`/${role.toLowerCase()}`)
+      router.push(`/${role.toLowerCase()}`);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold">AadharX</CardTitle>
-          <CardDescription>Decentralized Identity Verification System</CardDescription>
+          <CardDescription>
+            Decentralized Identity Verification System
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex justify-center">
@@ -69,5 +84,5 @@ export default function Home() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

@@ -1,8 +1,15 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,13 +17,25 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { User, ShieldCheck, CreditCard, Calendar, Download, Share2 } from "lucide-react"
+} from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  User,
+  ShieldCheck,
+  CreditCard,
+  Calendar,
+  Download,
+  Share2,
+} from "lucide-react";
 
 // Mock proof types
 const proofTypes = [
-  { id: "age", title: "Age Verification", description: "Prove I'm over 18 years old", icon: Calendar },
+  {
+    id: "age",
+    title: "Age Verification",
+    description: "Prove I'm over 18 years old",
+    icon: Calendar,
+  },
   {
     id: "identity",
     title: "Identity Verification",
@@ -35,31 +54,37 @@ const proofTypes = [
     description: "Prove my nationality status",
     icon: ShieldCheck,
   },
-]
+];
 
 export default function UserPage() {
-  const [activeTab, setActiveTab] = useState("proofs")
-  const [selectedProof, setSelectedProof] = useState<string | null>(null)
-  const [showQRDialog, setShowQRDialog] = useState(false)
+  const [activeTab, setActiveTab] = useState("proofs");
+  const [selectedProof, setSelectedProof] = useState<string | null>(null);
+  const [showQRDialog, setShowQRDialog] = useState(false);
 
   const handleProofSelection = (proofId: string) => {
-    setSelectedProof(proofId)
-    setShowQRDialog(true)
-  }
+    setSelectedProof(proofId);
+    setShowQRDialog(true);
+  };
 
   return (
     <div className="container py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold">User Dashboard</h1>
-          <p className="text-muted-foreground">Generate and share zero-knowledge proofs</p>
+          <p className="text-muted-foreground">
+            Generate and share zero-knowledge proofs
+          </p>
         </div>
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
           <User className="h-6 w-6 text-primary" />
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-6"
+      >
         <TabsList className="grid w-full max-w-md grid-cols-2">
           <TabsTrigger value="proofs">Generate Proofs</TabsTrigger>
           <TabsTrigger value="history">Proof History</TabsTrigger>
@@ -81,7 +106,11 @@ export default function UserPage() {
                   <CardDescription>{proof.description}</CardDescription>
                 </CardContent>
                 <CardFooter className="bg-muted/50 pt-2">
-                  <Button variant="default" className="w-full" onClick={() => handleProofSelection(proof.id)}>
+                  <Button
+                    variant="default"
+                    className="w-full"
+                    onClick={() => handleProofSelection(proof.id)}
+                  >
                     Generate Proof
                   </Button>
                 </CardFooter>
@@ -92,18 +121,28 @@ export default function UserPage() {
           <Card>
             <CardHeader>
               <CardTitle>Your Identity Wallet</CardTitle>
-              <CardDescription>Manage your decentralized identity and credentials</CardDescription>
+              <CardDescription>
+                Manage your decentralized identity and credentials
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="bg-muted p-4 rounded-md">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-md bg-background flex items-center justify-center">
-                    <img src="/placeholder.svg?height=64&width=64" alt="User" className="rounded-md" />
+                    <img
+                      src="/placeholder.svg?height=64&width=64"
+                      alt="User"
+                      className="rounded-md"
+                    />
                   </div>
                   <div>
                     <h3 className="font-medium">John Doe</h3>
-                    <p className="text-sm text-muted-foreground">ID: AX-12345-ABCDE</p>
-                    <p className="text-xs text-muted-foreground mt-1">Wallet: 0x71C...F3E2</p>
+                    <p className="text-sm text-muted-foreground">
+                      ID: AX-12345-ABCDE
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Wallet: 0x71C...F3E2
+                    </p>
                   </div>
                 </div>
               </div>
@@ -115,7 +154,9 @@ export default function UserPage() {
           <Card>
             <CardHeader>
               <CardTitle>Proof History</CardTitle>
-              <CardDescription>View your previously generated proofs and their usage history</CardDescription>
+              <CardDescription>
+                View your previously generated proofs and their usage history
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -125,7 +166,9 @@ export default function UserPage() {
                       <Calendar className="h-4 w-4 text-primary" />
                       <div>
                         <h3 className="font-medium">Age Verification</h3>
-                        <p className="text-sm text-muted-foreground">Generated on April 10, 2025</p>
+                        <p className="text-sm text-muted-foreground">
+                          Generated on April 10, 2025
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -146,7 +189,9 @@ export default function UserPage() {
                       <CreditCard className="h-4 w-4 text-primary" />
                       <div>
                         <h3 className="font-medium">License Verification</h3>
-                        <p className="text-sm text-muted-foreground">Generated on April 5, 2025</p>
+                        <p className="text-sm text-muted-foreground">
+                          Generated on April 5, 2025
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -173,10 +218,12 @@ export default function UserPage() {
               {selectedProof === "age" && "Age Verification Proof"}
               {selectedProof === "identity" && "Identity Verification Proof"}
               {selectedProof === "license" && "License Verification Proof"}
-              {selectedProof === "nationality" && "Nationality Verification Proof"}
+              {selectedProof === "nationality" &&
+                "Nationality Verification Proof"}
             </DialogTitle>
             <DialogDescription>
-              Your zero-knowledge proof has been generated. Share this QR code with verifiers.
+              Your zero-knowledge proof has been generated. Share this QR code
+              with verifiers.
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col items-center justify-center py-4">
@@ -188,7 +235,8 @@ export default function UserPage() {
               />
             </div>
             <p className="text-sm text-center mt-4 text-muted-foreground">
-              This proof verifies your information without revealing any personal data.
+              This proof verifies your information without revealing any
+              personal data.
             </p>
           </div>
           <DialogFooter className="flex flex-col sm:flex-row gap-2">
@@ -204,5 +252,5 @@ export default function UserPage() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
